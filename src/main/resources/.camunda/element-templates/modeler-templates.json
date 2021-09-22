@@ -1,0 +1,19 @@
+[
+  {
+    "id": "start-process-template",
+    "name": "Старт процесса",
+    "appliesTo": [
+      "bpmn:StartEvent"
+    ],
+    "properties": [
+      {
+        "label": "Обработчик старта процесса",
+        "type": "String",
+        "binding": {
+          "type": "camunda:property",
+          "name": "bpm-action-request-adapter-class"
+        }
+      }
+    ]
+  }
+]
