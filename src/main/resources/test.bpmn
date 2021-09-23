@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1djtp9p" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.7.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.14.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1djtp9p" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.7.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.14.0">
   <bpmn:collaboration id="Collaboration_1fwm2e7">
     <bpmn:participant id="Participant_08t31el" processRef="test-process" />
   </bpmn:collaboration>
   <bpmn:process id="test-process" name="test-process" isExecutable="true">
-    <bpmn:startEvent id="StartEvent_1">
+    <bpmn:startEvent id="StartEvent_1" name="Старт процесса" camunda:modelerTemplate="start-process-template">
+      <bpmn:extensionElements>
+        <camunda:properties>
+          <camunda:property name="bpm-action-request-adapter-class" value="com.example.processor.StartProcessCustomHandler" />
+        </camunda:properties>
+      </bpmn:extensionElements>
       <bpmn:outgoing>Flow_14d5keh</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_14d5keh" sourceRef="StartEvent_1" targetRef="Activity_14xihrn" />
-    <bpmn:userTask id="Activity_14xihrn">
-      <bpmn:incoming>Flow_14d5keh</bpmn:incoming>
-      <bpmn:outgoing>Flow_095wh4j</bpmn:outgoing>
-    </bpmn:userTask>
     <bpmn:endEvent id="Event_0m9vjep">
       <bpmn:incoming>Flow_095wh4j</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_095wh4j" sourceRef="Activity_14xihrn" targetRef="Event_0m9vjep" />
+    <bpmn:serviceTask id="Activity_14xihrn" name="Вывод данных процесса в консоль" camunda:class="com.example.processor.ProcessDataConsolProcessor">
+      <bpmn:incoming>Flow_14d5keh</bpmn:incoming>
+      <bpmn:outgoing>Flow_095wh4j</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1fwm2e7">
@@ -32,12 +37,15 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="159" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0i8brp6_di" bpmnElement="Activity_14xihrn">
-        <dc:Bounds x="280" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="157" y="202" width="82" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0m9vjep_di" bpmnElement="Event_0m9vjep">
         <dc:Bounds x="452" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_17hhcdh_di" bpmnElement="Activity_14xihrn">
+        <dc:Bounds x="280" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
