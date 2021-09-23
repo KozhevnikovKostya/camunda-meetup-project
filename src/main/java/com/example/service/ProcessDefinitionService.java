@@ -17,7 +17,13 @@ public class ProcessDefinitionService {
 
     private final RepositoryService repositoryService;
 
-    public List<String> getProcessDefinitions(){
+    public List<String> getProcessDefinitionsKeys(){
+        return repositoryService.createProcessDefinitionQuery().latestVersion().list().stream()
+                .map(ResourceDefinition::getKey)
+                .collect(Collectors.toList());
+    }
+
+    public List<String> getProcessDefinitionsId(){
         return repositoryService.createProcessDefinitionQuery().latestVersion().list().stream()
                 .map(ResourceDefinition::getId)
                 .collect(Collectors.toList());

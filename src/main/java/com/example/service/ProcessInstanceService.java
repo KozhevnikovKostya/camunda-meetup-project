@@ -16,10 +16,14 @@ import static com.example.processor.ProcessConstants.VIP_STATUS;
 public class ProcessInstanceService {
 
     private final RuntimeService runtimeService;
+    private final RepositoryService repositoryService;
 
-    public String startProcess(String id, boolean vip){
-
-        return runtimeService.createProcessInstanceById(id)
+    public String startProcess(String key, boolean vip){
+        ProcessDefinition definition = repositoryService.createProcessDefinitionQuery()
+                .processDefinitionKey(key)
+                .latestVersion()
+                .singleResult();
+        return runtimeService.createProcessInstanceById(definition.getId())
                 .setVariable(VIP_STATUS, vip)
                 .execute().getProcessInstanceId();
     }

@@ -19,7 +19,7 @@ public class ProcessApi {
 
     @GetMapping("/definition/all")
     public ResponseEntity<List<String>> getAllProcess(){
-        return ResponseEntity.ok(processDefinitionService.getProcessDefinitions());
+        return ResponseEntity.ok(processDefinitionService.getProcessDefinitionsKeys());
     }
 
     @DeleteMapping("/definition/delete/{id}")

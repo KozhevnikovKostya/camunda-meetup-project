@@ -12,9 +12,9 @@ public class ProcessManipulateApi {
 
     private final ProcessInstanceService processInstanceService;
 
-    @PostMapping("/{id}/start")
-    public ResponseEntity<String> startProcess(@PathVariable String id, @RequestParam(defaultValue = "false") boolean vip){
-        return ResponseEntity.ok(processInstanceService.startProcess(id, vip));
+    @PostMapping("/{key}/start")
+    public ResponseEntity<String> startProcess(@PathVariable String key, @RequestParam(defaultValue = "false") boolean vip){
+        return ResponseEntity.ok(processInstanceService.startProcess(key, vip));
     }
 
 }
